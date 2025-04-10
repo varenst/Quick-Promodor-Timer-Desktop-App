@@ -3,7 +3,7 @@ import { Button, Palette } from "std-widgets.slint";
 
 export component AppWindow inherits Window {
     in-out property <color> backgroundcolor: #bb4949; //Red - #bb4949; Green - #12ee2f
-    in-out property <int> timeleft: 10;
+    in-out property <int> timeleft: 1500;
     in-out property <string> stringtimeleft: "25:00";
     property <bool> isrelaxing: false;
     in-out property <bool> istimerrunning: false;
@@ -25,10 +25,10 @@ export component AppWindow inherits Window {
                 isrelaxing = !isrelaxing;
 
                 if isrelaxing {
-                    timeleft = 10;
+                    timeleft = 300;
                     backgroundcolor = #12ee2f;
                 } else {
-                    timeleft = 10;
+                    timeleft = 1500;
                     backgroundcolor = #bb4949;
                 }
             }
