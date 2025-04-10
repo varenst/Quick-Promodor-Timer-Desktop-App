@@ -1,0 +1,75 @@
+
+import { Button, Palette } from "std-widgets.slint";
+
+export component AppWindow inherits Window {
+    in-out property <color> backgroundcolor: #bb4949; //Red - #bb4949; Green - #12ee2f
+    in-out property <int> timeleft: 10;
+    in-out property <string> stringtimeleft: "25:00";
+    property <bool> isrelaxing: false;
+    in-out property <bool> istimerrunning: false;
+
+    background: backgroundcolor;
+
+    callback start-timer();
+    callback get_formatedTime(int) -> string;
+
+    timer:= Timer {
+        interval: 1s;
+        running: istimerrunning;
+        triggered() => {
+            timeleft -= 1;
+
+            stringtimeleft = get_formatedTime(timeleft);
+
+            if (timeleft == 0) {
+                isrelaxing = !isrelaxing;
+
+                if isrelaxing {
+                    timeleft = 10;
+                    backgroundcolor = #12ee2f;
+                } else {
+                    timeleft = 10;
+                    backgroundcolor = #bb4949;
+                }
+            }
+        }
+    }
+    
+    GridLayout {
+        padding: 50px;
+        spacing: 25px;
+
+        Row {
+            Text {
+                text: "Promodor Timer";
+                color: white;
+                horizontal-alignment: center;
+                vertical-alignment: center;
+                font-size: 54px;
+                font-weight: 1000;
+            }
+        }
+
+        Row {
+            Text {
+                text: stringtimeleft;
+                color: white;
+                horizontal-alignment: center;
+                vertical-alignment: center;
+                font-size: 54px;
+                font-weight: 1000;
+            }
+        }
+
+        Row {
+            Button {
+                text: "Start";
+                primary: true;
+                height: 35px;
+                clicked => {
+                    root.start-timer();
+                }
+            }
+        }
+    }
+}
